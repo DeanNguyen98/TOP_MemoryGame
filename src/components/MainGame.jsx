@@ -2,31 +2,40 @@ import { useEffect, useState } from "react";
 import Card from "./Card";
 
 export default function MainGame(props) {
-    const {pokemonData, handleClicked} = props;
+    const {pokemonData, handleClick, playerScore, highScore} = props;
     const [cardtoShow, setCardtoShow] = useState([]);
     useEffect(() => {
         if (pokemonData.length > 0) {
             setCardtoShow(pokemonData.slice(0,5));
         }
     },[pokemonData])
+    useEffect(() => {
+        if (pokemonData.length > 0) {
+            shuffleCard();
+        }
+    }, [pokemonData]);
 
     function shuffleCard () {
         const shuffledList = [...pokemonData].sort(() => 0.5 - Math.random());
         setCardtoShow(shuffledList.slice(0,5));
-    }
-    function onCardClicked(clicked) {
-        handleClicked(clicked);
-        shuffleCard();
+        console.log(shuffledList);
+        console.log(cardtoShow);
     }
     return (
         <>
-            {cardtoShow.length > 0 && cardtoShow.map(card => {
+        <div className="score-ctn">
+            <p>Score: {playerScore} </p>
+            <p>High Score: {highScore}</p>
+        </div>
+        <div className="card-ctn">
+        {cardtoShow.length > 0 && cardtoShow.map(card => {
                 return <Card key={card.id} 
                 pokemon={card}
                 handleClick={() => {
-                    onCardClicked(card)
+                    handleClick(card)
                 }}/>
             })}
+        </div>
         </>
     )
 }
