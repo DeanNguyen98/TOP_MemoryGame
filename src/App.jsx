@@ -20,31 +20,34 @@ function App() {
     if (playerScore > highScore) setHighScore(playerScore);
   }, [playerScore, highScore]);
   
-  //  function gameReset() {
-  //   setPokemonData((prevPokemonData) => {
-  //     return prevPokemonData.map(pokemon => ({
-  //       ...pokemon,
-  //       isClicked: false
-  //     }));
-  //   })
-  //  }
+   function gameReset() {
+    setPokemonData((prevPokemonData) => {
+      return prevPokemonData.map(pokemon => ({
+        ...pokemon,
+        isClicked: false
+      }));
+    })
+   }
 
   function handleCardClicked (clicked) {
-    setPokemonData(prevPokemonData => {
-      return prevPokemonData.map(pokemon => {
-        if (pokemon.id === clicked.id) {
-          if (!clicked.isClicked) {
-            setPlayerScore(playerScore + 1)
-            return {...pokemon, isClicked: true}
+    if (clicked.isClicked === true){
+      alert("lose")
+      setPlayerScore(0);
+      gameReset();
+    }
+    else {
+      setPokemonData(prevPokemonData => {
+        return prevPokemonData.map(pokemon => {
+          if (pokemon.id === clicked.id) {
+            if (clicked.isClicked === false) {
+              setPlayerScore(playerScore + 1)
+              return {...pokemon, isClicked: true}
+            }
           }
-          else {
-            alert(" You lose");
-            setPlayerScore(0);
-          }
-        }
-        return pokemon;
+          return pokemon;
+        })
       })
-    })
+    }
   }
   return (
     <>
