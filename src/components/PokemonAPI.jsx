@@ -12,7 +12,8 @@ export const fetchData = async () => {
           name: pokemon.name,
           url: pokemon.url,
           image: pokemondata.sprites.front_default,
-          id: uuidv4()
+          id: uuidv4(),
+          isClicked: false
         }
       })
       const pokemonList = await Promise.all(promises);
