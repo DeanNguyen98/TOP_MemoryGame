@@ -7,6 +7,7 @@ import MainGame from './components/MainGame';
 function App() {
   const [pokemonData, setPokemonData] = useState([]);
   const [playerScore, setPlayerScore] = useState(0);
+  const [highScore, setHighScore] = useState(0);
   useEffect(() => {
     const getPokemonData = async () => {
       const data = await fetchData();
@@ -14,23 +15,44 @@ function App() {
     }
     getPokemonData();
   }, []);
+
+  useEffect(() => {
+    if (playerScore > highScore) setHighScore(playerScore);
+  }, [playerScore, highScore]);
+  
+  //  function gameReset() {
+  //   setPokemonData((prevPokemonData) => {
+  //     return prevPokemonData.map(pokemon => ({
+  //       ...pokemon,
+  //       isClicked: false
+  //     }));
+  //   })
+  //  }
+
   function handleCardClicked (clicked) {
-    pokemonData.find(pokemon => {
-      if (pokemon.id === clicked.id) {
-        if (!clicked.isClicked) {
-          pokemon.isClicked = true;
-          console.log(pokemonData);
-          setPlayerScore(playerScore+1);
-        } else {
-          alert('you lose, try again');
+    setPokemonData(prevPokemonData => {
+      return prevPokemonData.map(pokemon => {
+        if (pokemon.id === clicked.id) {
+          if (!clicked.isClicked) {
+            setPlayerScore(playerScore + 1)
+            return {...pokemon, isClicked: true}
+          }
+          else {
+            alert(" You lose");
+            setPlayerScore(0);
+          }
         }
-      }
+        return pokemon;
+      })
     })
   }
-  console.log(playerScore);
   return (
     <>
-      <MainGame pokemonData={pokemonData} handleClicked={handleCardClicked} />
+      <MainGame pokemonData={pokemonData} 
+      playerScore={playerScore}
+      highScore={highScore} 
+      handleClick={handleCardClicked}
+      />
     </>
   )
 }
