@@ -29,13 +29,12 @@ function App() {
         isClicked: false
       }));
     })
+    setPlayerScore(0)
    }
 
   function handleCardClicked (clicked) {
     if (clicked.isClicked === true){
       setEndCondition(true);
-      setPlayerScore(0);
-      gameReset();
     }
     else {
       setPokemonData(prevPokemonData => {
@@ -59,7 +58,12 @@ function App() {
       handleClick={handleCardClicked}
       />
       {endCondition &&  
-        <EndModal/>
+        <EndModal
+        handleClick={()=> {
+          gameReset();
+          setEndCondition(false);
+        }}
+        />
       }
     </div>
   )

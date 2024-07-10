@@ -1,10 +1,10 @@
 import "../styles/EndModal.scss"
-export default function EndModal() {
+export default function EndModal({handleClick}) {
     return (
        <dialog open className="endModal">
             <div className="modal-content">
                 <p>You lose. Try again?</p>
-                <button>Restart</button>
+                <button onClick={handleClick}>Restart</button>
             </div>
        </dialog>
     )
