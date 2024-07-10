@@ -14,22 +14,36 @@ function App() {
   const [endCondition, setEndCondition] = useState(false);
   const [start, setStart] = useState(false);
   const [loading, setLoading] = useState(false)
-  
+  const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+  const LOAD_TIME = 250;
   useEffect(() => {
     if (playerScore > highScore) setHighScore(playerScore);
   }, [playerScore, highScore]);
 
-  const getPokemonData = async () => {
-    setLoading(true);
-    const data = await fetchData();
-    setPokemonData(data);
-    setLoading(false);
-  }
+  useEffect(() => {
+    if (!start) return;
+    async function getPokemonData () {
+      try {
+        const data = fetchData();
+        
+        setLoading(true);
+        
+        await sleep(LOAD_TIME);
 
-  async function gameStart() {
+        setPokemonData(await data);
+        
+        setLoading(false);
+        console.log(data);
+      } catch (error) {
+        console.error('Failed to fetch Pokemon data:', error);
+      }
+    }
+    getPokemonData();
+  }, [start])
+
+  function gameStart() {
     setStart(true);
-    await getPokemonData()
-
+    console.log(pokemonData)
   }
    function gameReset() {
     setPokemonData((prevPokemonData) => {
@@ -61,29 +75,27 @@ function App() {
   }
   return (
     <div className="main-container">
-      {!start ? (
-        <StartScreen 
-        handleStartClick={gameStart}/>
-      ) : loading ? (
-        <Loading />
-      ) : (
-        <MainGame pokemonData={pokemonData} 
-      playerScore={playerScore}
-      highScore={highScore} 
-      handleClick={handleCardClicked}
+    {!start ? ( 
+      <StartScreen handleStartClick={gameStart} />
+    ) : loading ? ( 
+      <Loading />
+    ) : (
+      <MainGame 
+        pokemonData={pokemonData} 
+        playerScore={playerScore}
+        highScore={highScore} 
+        handleClick={handleCardClicked}
       />
-      )
-      
-    }
-      {endCondition &&  
-        <EndModal
-        handleClick={()=> {
+    )}
+    {endCondition &&  
+      <EndModal
+        handleClick={() => {
           gameReset();
           setEndCondition(false);
         }}
-        />
-      }
-    </div>
+      />
+    }
+  </div>
   )
 }
 
