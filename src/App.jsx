@@ -55,6 +55,7 @@ function App() {
       }));
     })
     setPlayerScore(0)
+    setStart(false);
    }
 
   function handleCardClicked (clicked) {
