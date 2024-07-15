@@ -22,12 +22,6 @@ function App() {
   }, [playerScore, highScore]);
   
   useEffect(() => {
-    
-    handleGameWin()
-  
-  },[endCondition])
-
-  useEffect(() => {
     if (!start) return;
     async function getPokemonData () {
       try {
@@ -52,6 +46,7 @@ function App() {
     setStart(true);
     console.log(pokemonData)
   }
+  
    function gameReset() {
     setPokemonData((prevPokemonData) => {
       return prevPokemonData.map(pokemon => ({
@@ -77,15 +72,16 @@ function App() {
           return pokemon;
         })
       })
-      setPlayerScore(playerScore + 1)
+      setPlayerScore(prevScore => {
+        const newScore = prevScore + 1;
+        if (newScore === pokemonData.length) {
+          setEndCondition("win");
+        }
+        return newScore;
+      });
     }
   }
 
-  function handleGameWin() {
-    if (playerScore === pokemonData.length) {
-      setEndCondition("win");
-    }
-  }
   return (
     <div className="main-container">
     {!start ? ( 
@@ -100,22 +96,22 @@ function App() {
         handleClick={handleCardClicked}
       />
     )}
-    {endCondition === "lose" ? (
-       <EndModal
-       handleClick={() => {
-         gameReset();
-         setEndCondition('');
-       }}
-     />
-    )  : (
-      <WinModal
+    {endCondition === "lose" && (
+      <EndModal
       handleClick={() => {
         gameReset();
         setEndCondition('');
       }}
     />
-    )
-    }
+    )}
+    {endCondition === "win" && (
+       <WinModal
+       handleClick={() => {
+         gameReset();
+         setEndCondition('');
+       }}
+     />
+    )}
   </div>
   )
 }
