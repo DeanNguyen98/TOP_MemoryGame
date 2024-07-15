@@ -6,19 +6,26 @@ import MainGame from './components/MainGame';
 import EndModal from './components/EndModal';
 import StartScreen from './components/StartScreen';
 import Loading from './components/Loading';
+import WinModal from './components/WinModal';
 
 function App() {
   const [pokemonData, setPokemonData] = useState([]);
   const [playerScore, setPlayerScore] = useState(0);
   const [highScore, setHighScore] = useState(0);
-  const [endCondition, setEndCondition] = useState(false);
+  const [endCondition, setEndCondition] = useState("");
   const [start, setStart] = useState(false);
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
   const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
   const LOAD_TIME = 250;
   useEffect(() => {
     if (playerScore > highScore) setHighScore(playerScore);
   }, [playerScore, highScore]);
+  
+  useEffect(() => {
+    
+    handleGameWin()
+  
+  },[endCondition])
 
   useEffect(() => {
     if (!start) return;
@@ -57,7 +64,7 @@ function App() {
 
   function handleCardClicked (clicked) {
     if (clicked.isClicked === true){
-      setEndCondition(true);
+      setEndCondition("lose");
     }
     else {
       setPokemonData(prevPokemonData => {
@@ -71,6 +78,12 @@ function App() {
         })
       })
       setPlayerScore(playerScore + 1)
+    }
+  }
+
+  function handleGameWin() {
+    if (playerScore === pokemonData.length) {
+      setEndCondition("win");
     }
   }
   return (
@@ -87,13 +100,21 @@ function App() {
         handleClick={handleCardClicked}
       />
     )}
-    {endCondition &&  
-      <EndModal
-        handleClick={() => {
-          gameReset();
-          setEndCondition(false);
-        }}
-      />
+    {endCondition === "lose" ? (
+       <EndModal
+       handleClick={() => {
+         gameReset();
+         setEndCondition('');
+       }}
+     />
+    )  : (
+      <WinModal
+      handleClick={() => {
+        gameReset();
+        setEndCondition('');
+      }}
+    />
+    )
     }
   </div>
   )
