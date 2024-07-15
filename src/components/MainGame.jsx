@@ -6,18 +6,13 @@ export default function MainGame(props) {
     const [cardtoShow, setCardtoShow] = useState([]);
     useEffect(() => {
         if (pokemonData.length > 0) {
-            setCardtoShow(pokemonData.slice(0,5));
-        }
-    },[pokemonData])
-    useEffect(() => {
-        if (pokemonData.length > 0) {
             shuffleCard();
         }
     }, [pokemonData]);
 
     function shuffleCard () {
         const shuffledList = [...pokemonData].sort(() => 0.5 - Math.random());
-        setCardtoShow(shuffledList.slice(0,5));
+        setCardtoShow(shuffledList);
         console.log(shuffledList);
         console.log(cardtoShow);
     }
@@ -35,6 +30,9 @@ export default function MainGame(props) {
                     handleClick(card)
                 }}/>
             })}
+        </div>
+        <div className="goal-ctn">
+            <p>{playerScore}/{pokemonData.length}</p>
         </div>
         </>
     )
