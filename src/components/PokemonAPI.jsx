@@ -1,5 +1,4 @@
 import { v4 as uuidv4 } from 'uuid';
-
 const pokeAPI = `https://pokeapi.co/api/v2/pokemon?limit=150&offset=0`;
 
 export const fetchData = async () => {
@@ -22,8 +21,9 @@ export const fetchData = async () => {
         name: pokemon.name,
         url: pokemon.url,
         image: pokemondata.sprites.front_default,
-        id: uuidv4(),
-        isClicked: false
+        isClicked: false,
+        id: uuidv4()
+        
       }
     });
 
