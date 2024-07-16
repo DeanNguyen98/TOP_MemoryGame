@@ -15,6 +15,7 @@ function App() {
   const [endCondition, setEndCondition] = useState("");
   const [start, setStart] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [flip, setAllFlip] = useState(false);
   const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
   const LOAD_TIME = 250;
   useEffect(() => {
@@ -80,6 +81,10 @@ function App() {
         }
         return newScore;
       });
+      setAllFlip(true);
+      setTimeout(() => {
+        setAllFlip(false)
+      },1500)
     }
   }
 
@@ -92,9 +97,11 @@ function App() {
     ) : (
       <MainGame 
         pokemonData={pokemonData} 
+        setPokemonData={setPokemonData}
         playerScore={playerScore}
         highScore={highScore} 
         handleClick={handleCardClicked}
+        flip={flip}
       />
     )}
     {endCondition === "lose" && (

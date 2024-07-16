@@ -4,7 +4,7 @@ import Card from "./Card";
 
 
 export default function MainGame(props) {
-    const {pokemonData, handleClick, playerScore, highScore} = props;
+    const {pokemonData, handleClick, playerScore, highScore, flip} = props;
     const [cardtoShow, setCardtoShow] = useState([]);
     useEffect(() => {
         if (pokemonData.length > 0) {
@@ -15,9 +15,8 @@ export default function MainGame(props) {
     function shuffleCard () {
         const shuffledList = [...pokemonData].sort(() => 0.5 - Math.random());
         setCardtoShow(shuffledList);
-        console.log(shuffledList);
-        console.log(cardtoShow);
     }
+
     return (
         <div className="MainGame-ctn">
         <div className="score-ctn">
@@ -30,7 +29,8 @@ export default function MainGame(props) {
                 pokemon={card}
                 handleClick={() => {
                     handleClick(card)
-                }}/>
+                }}
+                flip={flip}/>
             })}
         </div>
         <div className="goal-ctn">
