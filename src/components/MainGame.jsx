@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
+import "../styles/MainGame.scss"
 import Card from "./Card";
+
 
 export default function MainGame(props) {
     const {pokemonData, handleClick, playerScore, highScore} = props;
@@ -17,10 +19,10 @@ export default function MainGame(props) {
         console.log(cardtoShow);
     }
     return (
-        <>
+        <div className="MainGame-ctn">
         <div className="score-ctn">
             <p>Score: {playerScore} </p>
-            <p>High Score: {highScore}</p>
+            <p>🏆 High Score: {highScore}</p>
         </div>
         <div className="card-ctn">
         {cardtoShow.length > 0 && cardtoShow.map(card => {
@@ -34,6 +36,6 @@ export default function MainGame(props) {
         <div className="goal-ctn">
             <p>{playerScore}/{pokemonData.length}</p>
         </div>
-        </>
+        </div>
     )
 }
