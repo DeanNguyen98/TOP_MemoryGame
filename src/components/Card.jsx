@@ -11,7 +11,7 @@ export default function Card({ pokemon, handleClick, flip }) {
           </div>
           {/*card-back*/}
           <div className="card-back">
-            <img src="../../public/cardBack.jpg"></img>
+            <img src="/cardBack.jpg"></img>
           </div>
         </div>
       </>
