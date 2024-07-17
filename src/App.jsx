@@ -59,34 +59,34 @@ function App() {
     setStart(false);
    }
 
-  function handleCardClicked (clicked) {
-    if (clicked.isClicked === true){
+   function shuffleCard() {
+    setPokemonData(prev => [...prev].sort(() => 0.5 - Math.random()));
+  }
+
+  function handleCardClicked(clicked) {
+    if (clicked.isClicked === true) {
       setEndCondition("lose");
       return;
     }
-      setAllFlip(true);
-      setPokemonData(prevPokemonData => {
-        return prevPokemonData.map(pokemon => {
-          if (pokemon.id === clicked.id) {
-            if (clicked.isClicked === false) {
-              return {...pokemon, isClicked: true}
-            }
-          }
-          return pokemon;
-        })
-      })
-      setPlayerScore(prevScore => {
-        const newScore = prevScore + 1;
-        if (newScore === pokemonData.length) {
-          setEndCondition("win");
-        }
-        return newScore;
-      });
-      setTimeout(() => {
-        setAllFlip(false)
-      },1500)
+    setAllFlip(true);
+    setPokemonData(prev => prev.map(pokemon => {
+      if (pokemon.id === clicked.id) {
+        return { ...pokemon, isClicked: true };
+      }
+      return pokemon;
+    }));
+    setPlayerScore(prevScore => {
+      const newScore = prevScore + 1;
+      if (newScore === pokemonData.length) {
+        setEndCondition("win");
+      }
+      return newScore;
+    });
+    setTimeout(() => {
+      shuffleCard();
+      setAllFlip(false);
+    }, 1500);
   }
-
   return (
     <div className="main-container">
     {!start ? ( 
