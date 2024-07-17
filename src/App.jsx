@@ -17,7 +17,7 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [flip, setAllFlip] = useState(false);
   const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
-  const LOAD_TIME = 250;
+  const LOAD_TIME = 1050;
   useEffect(() => {
     if (playerScore > highScore) setHighScore(playerScore);
   }, [playerScore, highScore]);
@@ -62,8 +62,9 @@ function App() {
   function handleCardClicked (clicked) {
     if (clicked.isClicked === true){
       setEndCondition("lose");
+      return;
     }
-    else {
+      setAllFlip(true);
       setPokemonData(prevPokemonData => {
         return prevPokemonData.map(pokemon => {
           if (pokemon.id === clicked.id) {
@@ -81,11 +82,9 @@ function App() {
         }
         return newScore;
       });
-      setAllFlip(true);
       setTimeout(() => {
         setAllFlip(false)
       },1500)
-    }
   }
 
   return (

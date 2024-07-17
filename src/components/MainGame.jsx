@@ -8,9 +8,9 @@ export default function MainGame(props) {
     const [cardtoShow, setCardtoShow] = useState([]);
     useEffect(() => {
         if (pokemonData.length > 0) {
-            shuffleCard();
+          shuffleCard();
         }
-    }, [pokemonData]);
+      }, [pokemonData]);
 
     function shuffleCard () {
         const shuffledList = [...pokemonData].sort(() => 0.5 - Math.random());
@@ -28,7 +28,7 @@ export default function MainGame(props) {
                 return <Card key={card.id} 
                 pokemon={card}
                 handleClick={() => {
-                    handleClick(card)
+                    handleClick(card);
                 }}
                 flip={flip}/>
             })}
