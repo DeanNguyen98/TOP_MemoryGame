@@ -7,7 +7,6 @@ import EndModal from './components/EndModal';
 import StartScreen from './components/StartScreen';
 import Loading from './components/Loading';
 import WinModal from './components/WinModal';
-
 function App() {
   const [pokemonData, setPokemonData] = useState([]);
   const [playerScore, setPlayerScore] = useState(0);
@@ -60,7 +59,22 @@ function App() {
    }
 
    function shuffleCard() {
-    setPokemonData(prev => [...prev].sort(() => 0.5 - Math.random()));
+    const availableCards = [...pokemonData];
+    const shuffledPokemons = [];
+    while (availableCards.length) {
+      const index = Math.floor(Math.random() * availableCards.length);
+      const card = availableCards[index];
+      shuffledPokemons.push(card);
+      availableCards.splice(index, 1);
+    }
+    setPokemonData(shuffledPokemons);
+  }
+
+  function updateCardsClicked(id) {
+    const cardIndex = pokemonData.findIndex(pokemon => pokemon.id === id);   
+    const newPokemonData = [...pokemonData];
+    newPokemonData[cardIndex].isClicked = true;  
+    setPokemonData(newPokemonData);
   }
 
   function handleCardClicked(clicked) {
@@ -69,12 +83,7 @@ function App() {
       return;
     }
     setAllFlip(true);
-    setPokemonData(prev => prev.map(pokemon => {
-      if (pokemon.id === clicked.id) {
-        return { ...pokemon, isClicked: true };
-      }
-      return pokemon;
-    }));
+    updateCardsClicked(clicked.id);
     setPlayerScore(prevScore => {
       const newScore = prevScore + 1;
       if (newScore === pokemonData.length) {
@@ -84,8 +93,10 @@ function App() {
     });
     setTimeout(() => {
       shuffleCard();
-      setAllFlip(false);
-    }, 1500);
+      setTimeout(() => {
+        setAllFlip(false)
+      },200)
+    }, 800);
   }
   return (
     <div className="main-container">
