@@ -19,7 +19,6 @@ export const fetchData = async () => {
       const pokemondata = await pokemonResponse.json();
       return {
         name: pokemon.name,
-        url: pokemon.url,
         image: pokemondata.sprites.front_default,
         isClicked: false,
         id: uuidv4()
