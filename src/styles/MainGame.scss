@@ -27,6 +27,8 @@
     translateY(var(--translate-y, 0));
 }
 
+//when .flip is added, .card will rotate-y 180deg. Without flip, it will default to rotateY(0);
+
 .card.flip {
     --rotate-y: 180deg;
 }
