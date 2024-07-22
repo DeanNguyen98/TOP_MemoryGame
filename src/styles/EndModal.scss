@@ -23,8 +23,25 @@
         border-width: 21px;
         border-style: solid;
     }
+
+    button {
+      margin: 10px;
+      border: 1px solid black;
+      border-radius: 5px;
+      padding: 3px;
+      font-size: 1.2rem;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #fefefe;
+    }
+
 }
 
-// .endModal::backdrop {
-//     background-color: rgba(0, 0, 0, 0.5);
-// } 
+.giphy-embed {
+  border: none;
+  width: 300px;
+  height: 200px;
+}
+

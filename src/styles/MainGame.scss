@@ -12,9 +12,10 @@
 }
 
 .card-ctn {
-    display: grid;
-    grid-template-columns: repeat(5, 180px);
-    gap: 1rem;
+    display: flex;
+    gap: .5rem;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
 .card {
