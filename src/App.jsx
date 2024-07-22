@@ -99,6 +99,12 @@ function App() {
     }, 800);
   }
   return (
+    <>
+    <header>
+      <img src="../pokeball.png" alt="pokeball-image" className="">     
+      </img>
+      <h2>Gotta <span>Pick</span> Them All</h2>
+    </header>
     <div className="main-container">
     {!start ? ( 
       <StartScreen handleStartClick={gameStart} />
@@ -131,6 +137,7 @@ function App() {
      />
     )}
   </div>
+  </>
   )
 }
 
