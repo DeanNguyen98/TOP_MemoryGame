@@ -3,8 +3,9 @@ export default function WinModal({handleClick}) {
     return (
        <dialog open className="Modal">
             <div className="modal-content">
-                <p>You win. Congratulations!?</p>
-                <button onClick={handleClick}>Restart</button>
+            <iframe src="https://giphy.com/embed/13G7hmmFr9yuxG" className="giphy-embed"></iframe>
+                <p>You win. Congratulations!!!</p>
+                <button onClick={handleClick}>Catch some more?</button>
             </div>
        </dialog>
     )
